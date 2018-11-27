@@ -91,7 +91,7 @@ describe("A <Link>", () => {
     });
   });
 
-  it("exposes its ref via an innerRef prop", done => {
+  it("exposes its ref via an innerRef prop and takes a callback", done => {
     function refCallback(n) {
       if (n) {
         expect(n.tagName).toEqual("A");
@@ -107,6 +107,21 @@ describe("A <Link>", () => {
       </MemoryRouter>,
       node
     );
+  });
+
+  it("exposes its ref via an innerRef prop and takes a ref object", done => {
+    let refObject = React.createRef();
+
+    renderStrict(
+      <MemoryRouter>
+        <Link to="/" innerRef={refObject}>
+          link
+        </Link>
+      </MemoryRouter>,
+      node
+    );
+    
+    expect(refObject.current.tagName).toEqual("A");
   });
 
   describe("with a <HashRouter>", () => {
